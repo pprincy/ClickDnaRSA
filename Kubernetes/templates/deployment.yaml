@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: {{ .Values.name }}-deploy
+    namespace: {{ .Values.namespace }}
+    labels:
+        app: {{ .Values.name }}
+spec:
+    revisionHistoryLimit: 5
+    minReadySeconds: 10
+    strategy:
+        type: RollingUpdate
+        rollingUpdate:
+            maxUnavailable: 1
+            maxSurge: 1
+    replicas: {{ default 2 .Values.replicas }}
+    selector:
+        matchLabels:
+            app: {{ .Values.name }}
+    template:
+        metadata:
+            labels:
+                app: {{ .Values.name }}
+                date: "{{ now | unixEpoch }}"
+        spec:
+          #  hostNetwork: true
+            containers:
+                - name: {{ .Values.name }}-frontend
+                  image: {{ .Values.image }}
+                  imagePullPolicy: Always
+                  command: ["nginx", "-g", "daemon off;"]
+                  ports:
+#                    - containerPort: {{ default 80 .Values.port }}
+                     - containerPort: {{ .Values.containerport }}
+
+            imagePullSecrets:
+                - name: clickdna-frontend

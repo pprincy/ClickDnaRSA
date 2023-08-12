@@ -1,0 +1,6 @@
+version: '3.7'
+
+services: 
+  clickdna_frontend_staging:
+    image: "${DOCKER_REGISTRY}/clickdna-frontend:test"
+    command: sh -c "echo \"TODO code coverage\""

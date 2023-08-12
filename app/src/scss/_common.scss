@@ -1,0 +1,70 @@
+.w-90 {
+  width: 90%;
+}
+.border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+}
+.list-group {
+  height: 320px;
+}
+
+.list-group:empty,
+.list-group > div:empty {
+  padding: 1rem;
+  text-align: center;
+}
+
+.list-group:empty:before,
+.list-group > div:empty:before {
+  content: "Drop Items Here";
+  color: #a99d9d;
+}
+
+.ghost {
+  opacity: 0.4;
+}
+
+.table-no-border {
+  td {
+    border-bottom: none !important;
+  }
+}
+
+.centered-input input {
+  text-align: center !important;
+}
+
+.v-timeline--dense .v-timeline-item__body {
+  max-width: calc(100% - 60px) !important;
+}
+
+.v-timeline-item__divider {
+  min-width: 24px !important;
+  justify-content: flex-start !important;
+}
+
+.v-data-table-header th.sortable span:nth-child(3) {
+  color: red;
+  position: relative;
+  top: -5px;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.country-logo {
+  max-width: 100px;
+  max-height: 20px;
+}
+
+.cur-pointer {
+  cursor: pointer;
+}
+.cur-pointer:hover {
+  opacity: 0.7;
+}
+.required label::after {
+  content: " *";
+  color: red;
+  position: relative;
+  top: -3px;
+}

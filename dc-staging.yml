@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  clickdna_frontend_staging:
+    image: "${DOCKER_REGISTRY}/clickdna-frontend:staging"
+    volumes:
+      - /app/clickdna/node_modules:/app/node_modules
+    ports:
+      - '8050:80'
+    environment:
+      - VUE_APP_API_BASE_URL=${STAG_VUE_APP_API_BASE_URL}
+      - VUE_APP_SUBSCRIPTION_KEY=${STAG_VUE_APP_API_BASE_URL}
+    container_name: clickdna_frontend_staging

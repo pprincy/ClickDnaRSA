@@ -1,0 +1,18 @@
+# Metadata descriptors for the service
+name: clickdna-frontend-prod
+
+# Namespace for pods
+namespace: clickdna-prod
+
+# Image name in Dockerhub, which will have the version appended to create the full tag
+image: dockerhub.rsa.global/clickdna-frontend-prod:master
+
+# Replicas to be deployed (Default of 2)
+replicas: 3
+
+# To change the listener port for image (Default 80)
+port: 80
+ingressport: 80
+targetport: 80
+containerport: 80
+hostname: clickdna.rsa.global

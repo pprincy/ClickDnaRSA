@@ -1,0 +1,4 @@
+#!/bin/sh
+
+docker-compose -f dc-development.yml --env-file=development.env -p dev down
+docker-compose -f dc-development.yml --env-file=development.env -p dev up --build --remove-orphans

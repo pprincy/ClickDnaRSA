@@ -1,0 +1,77 @@
+stages:
+  - build
+  - test
+  - release
+  - deploy
+
+variables:
+  RSA_PROJECT_KEY: clickdna-frontend
+  CONTAINER_IMAGE: $DOCKER_REGISTRY/$RSA_PROJECT_KEY
+  CONTAINER_TEST_IMAGE: $DOCKER_REGISTRY/$RSA_PROJECT_KEY:test
+  CONTAINER_STAG_IMAGE: $DOCKER_REGISTRY/$RSA_PROJECT_KEY:staging
+  DEPLOY_PATH: /root/clickdna-frontend
+  AZURE_BASE_API_URL: $STAG_VUE_APP_API_BASE_URL
+  AZURE_SUB_KEY: $STAG_VUE_APP_SUBSCRIPTION_KEY
+
+before_script:
+  - echo "RSA Project KEY ${RSA_PROJECT_KEY}"
+  - echo "Container Image ${CONTAINER_IMAGE}"
+  - echo "Container Test Image ${CONTAINER_TEST_IMAGE}"
+  - echo "Vue App API Base URL ${AZURE_BASE_API_URL}"
+  - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASS" "$DOCKER_REGISTRY"
+
+codequality:
+  stage: test
+  tags:
+    - rsadna-staging
+  script:
+    - docker pull codeclimate/codeclimate
+    - docker run --env CODECLIMATE_CODE="$PWD" --volume "$PWD":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate analyze -f json > gl-code-quality-report.json
+  artifacts:
+    paths: [gl-code-quality-report.json]
+  only:
+    - staging
+
+build:
+  stage: build
+  tags:
+    - rsadna-staging
+  script:
+    - docker build --build-arg api_url="$AZURE_BASE_API_URL" --build-arg api_key="$AZURE_SUB_KEY" -f Dockerfile.staging -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+  only:
+   - staging
+
+test_image:
+  stage: test
+  tags:
+    - rsadna-staging
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker-compose -f dc-ci.yml -p test_image down
+    - docker-compose -f dc-ci.yml -p test_image up --build --abort-on-container-exit --exit-code-from clickdna_frontend_staging
+  coverage: '/TOTAL.+?(\d+\%)$/'
+  only:
+    - staging
+
+release_stg:
+  stage: release
+  tags:
+    - rsadna-staging
+  only:
+    - staging
+  script:
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_IMAGE:staging
+    - docker push $CONTAINER_IMAGE:staging
+
+deploy_on_staging:
+  stage: deploy
+  tags:
+    - rsadna-staging
+  only:
+    - staging
+  environment:
+    name: staging
+  script:
+    - docker-compose -f dc-staging.yml down
+    - docker-compose -f dc-staging.yml up -d --build

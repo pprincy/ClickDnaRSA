@@ -1,0 +1,71 @@
+{
+  "name": "click-dna",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.21.4",
+    "core-js": "^3.21.1",
+    "d3": "^5.16.0",
+    "gmap-vue": "^1.5.0",
+    "highlight.js": "^10.7.3",
+    "js-web-screen-shot": "^1.6.2",
+    "powerbi-client": "^2.19.1",
+    "vue": "^2.6.14",
+    "vue-lodash": "^2.1.2",
+    "vue-moment": "^4.1.0",
+    "vue-router": "^3.5.3",
+    "vuedraggable": "^2.24.3",
+    "vuetify": "^2.6.3",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.1.0",
+    "xlsx": "^0.17.5"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.15",
+    "@vue/cli-plugin-eslint": "^4.5.15",
+    "@vue/cli-service": "^4.5.15",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^2.5.1",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.2.1",
+    "vue-cli-plugin-vuetify": "^2.4.6",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "@vue/prettier"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "endOfLine": "auto"
+        }
+      ]
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

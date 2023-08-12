@@ -1,0 +1,15 @@
+# Metadata descriptors for the service
+name: ""
+
+# Namespace for pods
+namespace: ""
+
+# Image name in Dockerhub, which will have the version appended to create the full tag
+image: ""
+
+# Replicas to be deployed (Default of 2)
+replicas: ""
+
+# Hostname for devlopment
+hostname: ""
+

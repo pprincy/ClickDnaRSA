@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+   name: clickdna-{{ .Values.name }}
+   namespace: {{ .Values.namespace }}
+   annotations:
+     kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: {{ .Values.hostname }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.name }}
+            port:
+              number: {{ .Values.ingressport }}
